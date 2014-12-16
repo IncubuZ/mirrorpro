@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"> 
+    
+	<title>Situation Report</title>
+    	<link rel="stylesheet" type="text/css" href="css/jquery.mobile.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/themes/jquery.mobile.icons.min.css">        
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type='application/javascript' src="js/fastclick.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/mobileInit.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/login_regis.js"></script>
+         <script type="text/javascript" src="js/profile.js"></script>
+		
+</head>
+
+<body>
+<!-------------------firstPage Start---------------------->
+<div data-role="page" id="firstPage" class="divPage"></div>
+<!-------------------firstPage end------------------------>
+
+<!---------Login and Regis Main Page Start---------------->
+ <div class="divPage" data-role="page" id="loginRegisPage">
+	<div class="gridContainer clearfix">
+		<div id="logo" style="text-align: center">
+			<img align="middle" height="62" src="img/welcome.png" width="246">
+		</div>
+		<div id="ButtonGroup">
+			<div id="loginButton" style="text-align: center">
+				<a class="ui-btn ui-icon-lock ui-btn-icon-left ui-mini activeOnce" data-transition=
+				"none" href="#loginPage">&nbsp;เข้าสู่ระบบ</a>
+			</div>
+			<div id="regisButton" style="text-align: center">
+				<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-mini activeOnce" data-transition=
+				"none" href="#regisPage">&nbsp;ลงทะเบียน email</a>
+			</div>
+			<div id="loginFbButton" style="text-align: center">
+				<a class="ui-btn ui-icon-facebook ui-btn-icon-left ui-mini activeOnce"
+				data-transition="none" href="#">&nbsp;เข้าใช้งานด้วย facebook</a>
+			</div>
+		</div><!--buttongroup-->
+	</div><!--gridContainer clearfix-->
+	<div data-position="fixed" data-role="footer">
+		<div data-role="header">
+			<h1>Page Title</h1>
+			<div id="custom-border-radius">
+				<a class=
+				"ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-btn-icon-notext ui-icon-info activeOnce"
+				data-position-to="window" data-rel="popup" data-transition="pop" href=
+				"#popupCloseRight">info</a>
+				<div class="ui-content" data-role="popup" id="popupCloseRight" style=
+				"max-width:280px">
+					<a class=
+					"ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right"
+					data-rel="back" href="#">Close</a>
+					<p>
+						I have a close button at the top right corner with simple HTML markup.
+					</p>
+				</div>
+			</div><!--custom-border-radius-->
+		</div><!--header-->
+	</div><!-- /footer -->
+</div><!-- /Main page -->
+<!---------Login and Regis Main Page Stop---------------->
+
+<!-----------------Start of #loginPage-------------->
+<div class="divPage" data-role="page" id="loginPage">
+	<div data-role="header" data-theme="b">
+		<a class="activeOnce" data-icon="back" data-iconpos="notext" data-transition="none" href=
+		"#loginRegisPage">Home</a>
+		<h1>Situation Report</h1>
+	</div>
+	<div data-role="content" id="contentLogin">
+		<div class="ui-corner-all custom-corners">
+			<div class="ui-bar ui-bar-a">
+				<h3>เข้าสู่ระบบ</h3>
+			</div>
+			<form id="loginForm" name="loginForm">
+				<div class="ui-body ui-body-a">
+					<div class="ui-field-contain">
+						<input data-clear-btn="true" data-mini="true" id="username" name="username"
+						placeholder="Username" type="text" value="">
+					</div><!--ui-field-contain-->
+					<div class="ui-field-contain">
+						<input data-clear-btn="true" data-mini="true" id="password" name="password"
+						placeholder="Password" type="password" value="">
+					</div><!--ui-field-contain-->
+				</div><!--ui-bar ui-bar-a-->
+				<div class="ui-grid-a">
+					<div class="ui-block-a">
+						<a class=
+						"ui-btn ui-mini ui-icon-delete ui-btn-icon-left ui-corner-all activeOnce"
+						data-transition="none" href="#loginRegisPage">ยกเลิก</a>
+					</div>
+					<div class="ui-block-b">
+						<input data-mini="true" class="activeOnce" data-theme="b" id="submitButton" type="submit"
+						value="ตกลง">
+					</div>
+				</div>
+			</form><!--loginForm-->
+		</div><!--custom-corners-->
+	</div><!--contentLogin-->
+	<div data-position="fixed" data-role="footer">
+		<div data-role="header">
+			<h1>Page Title</h1>
+			<div id="custom-border-radius">
+				<a class=
+				"ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-btn-icon-notext ui-icon-info"
+				data-rel="dialog" data-transition="pop" href="#info">info</a>
+			</div>
+		</div><!--header-->
+	</div><!-- /footer -->
+</div><!-- /page Login -->
+<!-----------------Stop of #loginPage-------------->
+
+ <!---------------- Start of #regisPage ------------------>
+<div data-role="page" id="regisPage">
+	<div data-role="header" data-theme="b">
+		<a data-icon="back" data-iconpos="notext" href="#loginRegisPage" data-transition="none">Home</a>
+		<h1>Situation Report</h1>
+	</div>
+	<div data-role="content" id="contentRegis">
+		<div class="ui-corner-all custom-corners">
+			<div class="ui-bar ui-bar-a">
+				<h3>ลงทะเบียน</h3>
+			</div>
+			<form id="regisForm" name="regisForm">
+				<div class="ui-body ui-body-a">
+					<div class="ui-field-contain">
+						<input data-clear-btn="true" data-mini="true" id="userInputRegis" name=
+						"userInputRegis" placeholder="Username" type="text" value=""> <!--<a class=
+						"ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" id=
+						"checkUsedName" style="display:none">ตรวจสอบชื่อผู้ใช้</a>-->
+						<div id="pMsgU"></div>
+					</div><!--ui-field-contain-->
+					<div class="ui-field-contain">
+						<input data-clear-btn="true" data-mini="true" id="passInputRegis" name=
+						"passInputRegis" placeholder="Password" type="password" value="">
+					</div><!--ui-field-contain-->
+					<div class="ui-field-contain">
+						<input data-clear-btn="true" data-mini="true" id="repassInputRegis" name=
+						"repassInputRegis" placeholder="Re-Password" type="password" value="">
+						<div id="pMsgP"></div>
+					</div><!--ui-field-contain-->
+					<div class="ui-field-contain">
+						<input data-clear-btn="true" data-mini="true" id="emailInputRegis" name=
+						"emailInputRegis" placeholder="E-mail" type="text" value="">
+						<div id="pMsgE"></div>
+						<!--<div id="pTest"></div>-->
+					</div><!--ui-field-contain-->
+				</div><!--ui-bar ui-bar-a-->
+				<div class="ui-bar ui-bar-a">
+					<h3>ข้อมูลสมาชิก</h3>
+				</div><!--<form id="regisForm" method="post" name="regisForm">-->
+				<!--secondPage-->
+				<div class="ui-body ui-body-a">
+					<div class="ui-field-contain">
+                    <div class="ui-grid-a">
+                    <div class="ui-block-a">
+						<input data-clear-btn="true" data-mini="true" id="nameInput" name=
+						"nameInput" placeholder="ชื่อจริง" type="text" value="">
+                     </div>
+                     <div class="ui-block-b">
+						<input data-clear-btn="true" data-mini="true" id="surnameInput" name=
+						"surnameInput" placeholder="นามสกุลจริง" type="text" value="">
+                     </div>
+                     </div>
+					</div><!--ui-field-contain-->
+					<!--<label for="date-1">วันเกิด (เดือน/วัน/ปี)</label>
+					<div class="ui-field-contain">
+						<input id="datePicker" type="date">
+					</div>--><!--ui-field-contain-->
+					<!--ui-field-contain-->
+					<div class="ui-field-contain">
+						<select data-inline="true" data-mini="true" id="genderSelect" name=
+						"select-choice-mini">
+							<option value="male">
+								เพศชาย
+							</option>
+							<option value="female">
+								เพศหญิง
+							</option>
+							<option value="other">
+								เพศอื่นๆ
+							</option>
+						</select>
+					</div>
+                    <!--<div id="selDate"></div>-->
+					<div class="ui-grid-a">
+						<div class="ui-block-a">
+							<a class="ui-btn ui-mini ui-icon-back ui-btn-icon-left ui-corner-all exit activeOnce"
+							href="#loginRegisPage" data-transition="none">กลับ</a>
+						</div>
+						<div class="ui-block-b">
+							<a class=
+							"ui-btn ui-mini ui-icon-check ui-btn-icon-left ui-corner-all ui-btn-b activeOnce"
+							href="#" id="sumitBtn" data-transition="none">เสร็จสิ้น</a>
+						</div>
+					</div>
+				</div>
+			</form><!--end firstForm-->
+		</div><!--custom-corners-->
+	</div>
+	<div data-position="fixed" data-role="footer">
+		<div data-role="header">
+			<h1>Page Title</h1>
+			<div id="custom-border-radius">
+				<a class=
+				"ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-btn-icon-notext ui-icon-info"
+				data-rel="dialog" data-transition="pop" href="#info">info</a>
+			</div>
+		</div>
+	</div><!-- /footer -->
+</div><!-- /page Register -->
+<!-----------------Stop of #regisPage-------------->
+
+<!-----------------Start of #homePage-------------->
+<div id="homePage" data-role="page">
+<h1>HOME</h1>
+<div data-role="content">    
+		<div class="ui-block-a">
+		<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-mini activeOnce" data-transition=
+				"none" href="#profilePage">โปรไฟล์</a>
+						</div>
+		<input type="button" value="LogOut" onClick="logOut()"/>        
+    </div>
+    </div>
+<!-----------------Stop of #homePage-------------->
+
+ <!-- Start of second page: #profilePage -->
+<div data-role="page" id="profilePage">
+	<div data-position="fixed" data-role="header" data-theme="b">
+		<a data-icon="back" data-iconpos="notext" href="#homePage">Home</a>
+		<h1>
+			Situation Report
+		</h1>
+	</div>
+	<div data-role="content" id="contentProfile">
+		<div class="ui-corner-all custom-corners">
+			<div class="ui-bar ui-bar-a">
+				<h3>ข้อมูลผู้ใช้</h3>
+			</div>
+			
+				<div class="ui-body ui-body-a">
+					<div class="ui-grid-solo" align="center" id="gridProDetail">
+						<div class="ui-block-a">
+                        <p><img id="imgPropic" src="img/user-default.png"/></p>
+                        
+                        <ul data-role="listview" id="listProDetail">
+								<li><strong>&nbsp;&nbsp;&nbsp;&nbsp;ชื่อ : </strong><span id="spNamePro">zsdsF</span></li>
+								<li><strong>&nbsp;&nbsp;&nbsp;&nbsp;เพศ : </strong><span id="spGenderPro">zsdsF</span></li>
+								<li><strong>&nbsp;&nbsp;&nbsp;&nbsp;วันเกิด : </strong><span id="spBirthPro">zsdsF</span></li>
+								<li><strong>&nbsp;&nbsp;&nbsp;&nbsp;อีเมล์ : </strong><span id="spEmailPro">zsdsF</span></li>
+                         </ul>
+                            <ul data-role="listview" data-inset="true" data-shadow="false">
+                            <li><a href="#">Humans</a></li>
+                            <li><a href="#">Humans</a></li>
+                            </ul>
+						</div>
+					</div>
+				</div><!--ui-bar ui-bar-a-->
+				<!--<form id="regisForm" method="post" name="regisForm">-->
+				<!--secondPage-->
+			
+		</div><!--custom-corners-->
+	</div>
+	<div data-position="fixed" data-role="footer">
+		<div data-role="header">
+			<h1>
+				Page Title
+			</h1>
+			<div id="custom-border-radius">
+				<a class=
+				"ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-btn-icon-notext ui-icon-info"
+				data-rel="dialog" data-transition="pop" href="#info">info</a>
+			</div>
+		</div>
+	</div><!-- /footer -->
+</div><!-- /page Register -->
+
+</body>
+</html>
