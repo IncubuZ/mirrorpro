@@ -1,4 +1,4 @@
-localStorage.serviceURL = "http://situationreport.meximas.com/services/";
+//localStorage.serviceURL = "http://situationreport.meximas.com/services/";
 var serviceURL = localStorage.serviceURL;
 $(document).ready(function() {
 	FastClick.attach(document.body);
@@ -7,7 +7,10 @@ $(document).ready(function() {
 	document.addEventListener("deviceready", deviceReady, true);
 	$("#loginPage").on("pagecreate", loginBindEvent);
 	$("#regisPage").on("pagecreate", regisBindEvent);
-	$("#profilePage").on("pagecreate", getUserDetail);
+	//$("#profilePage").on("pagecreate", getUserDetail);
+	$("#editProfilePage").on("pagecreate", editUserBindEvent);
+	
+	
 });
 
 function checkPreAuth() {
@@ -50,4 +53,5 @@ function onBackbutton(e){
 function deviceReady() {
 	checkPreAuth();
 	document.addEventListener("backbutton", onBackbutton, false);
+	 console.log("navigator.geolocation works well");
 }

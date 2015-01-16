@@ -67,8 +67,8 @@ function handleLogin() {
 			success: function(res) {
 				//var user = res.item;
 				console.log(res);
-
-				if (res !== null) {
+				console.log(!jQuery.isEmptyObject(res));
+				if (!jQuery.isEmptyObject(res)) {
 					//store
 					console.log(res.user_id);
 					window.localStorage.username = u;
@@ -141,7 +141,7 @@ function handleRegis() {
 			crossDomain: true,
 			timeout: 10000,
 			success: function(res) {
-				if (res !== null) {
+				if (!jQuery.isEmptyObject(res)) {
 					console.log(res.user_id);
 					window.localStorage.username = u;
 					window.localStorage.password = p;
@@ -242,7 +242,8 @@ function checkPasswordRegEx(password) {
 function checkUsedName() {
 	var form = $("#regisForm");
 	var u = $("#userInputRegis").val();
-	var url = serviceURL + 'checkUsedName.php'; 
+	
+	var url = serviceURL + 'checkUsedName.php';
 	if (u !== '') {
 		if (checkUsernameRegEx(u) === true) {
 			$.ajax({

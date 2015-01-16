@@ -13,11 +13,17 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type='application/javascript' src="js/fastclick.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/moment-with-locales.js"></script>
         <script type="text/javascript" src="js/mobileInit.js"></script>
         <script type="text/javascript" src="js/jquery.mobile.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+         
+         
+        <script type="text/javascript" src="js/serverConfig.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/login_regis.js"></script>
          <script type="text/javascript" src="js/profile.js"></script>
+         <script type="text/javascript" src="js/addReport.js"></script>
+         <script type="text/javascript" src="js/combodate.js"></script>
 		
 </head>
 
@@ -138,7 +144,7 @@
 						"userInputRegis" placeholder="Username" type="text" value=""> <!--<a class=
 						"ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" id=
 						"checkUsedName" style="display:none">ตรวจสอบชื่อผู้ใช้</a>-->
-						<div id="pMsgU"></div>
+						<p id="pMsgU"></p>
 					</div><!--ui-field-contain-->
 					<div class="ui-field-contain">
 						<input data-clear-btn="true" data-mini="true" id="passInputRegis" name=
@@ -147,12 +153,12 @@
 					<div class="ui-field-contain">
 						<input data-clear-btn="true" data-mini="true" id="repassInputRegis" name=
 						"repassInputRegis" placeholder="Re-Password" type="password" value="">
-						<div id="pMsgP"></div>
+						<p id="pMsgP"></p>
 					</div><!--ui-field-contain-->
 					<div class="ui-field-contain">
 						<input data-clear-btn="true" data-mini="true" id="emailInputRegis" name=
 						"emailInputRegis" placeholder="E-mail" type="text" value="">
-						<div id="pMsgE"></div>
+						<p id="pMsgE"></p>
 						<!--<div id="pTest"></div>-->
 					</div><!--ui-field-contain-->
 				</div><!--ui-bar ui-bar-a-->
@@ -222,22 +228,43 @@
 <!-----------------Stop of #regisPage-------------->
 
 <!-----------------Start of #homePage-------------->
-<div id="homePage" data-role="page">
-<h1>HOME</h1>
-<div data-role="content">    
-		<div class="ui-block-a">
-		<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-mini activeOnce" data-transition=
-				"none" href="#profilePage">โปรไฟล์</a>
-						</div>
-		<input type="button" value="LogOut" onClick="logOut()"/>        
+    <div data-role="page" id="homePage">
+	  <div data-role="header" data-position="fixed" data-theme="b">
+        <h1>Fixed header</h1>
+          <a href="#nav-panel"class="ui-btn ui-btn-b ui-btn-inline ui-corner-all">MENU</a>
+      </div><!-- /header -->
+		<div data-role="content">
+		  
+	</div><!-- /content -->
+	  
+    <div data-position="fixed" data-role="footer" data-theme="b">
+		<div data-role="header">
+    <h6>My header</h6>
+    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">      
+        <a href="#addReportPage" class="ui-btn ui-btn-icon-right ui-icon-arrow-u ui-btn-icon-notext ui-icon-camera" onclick="getCurrentPosition();take_pic();">addReport</a>
+        <a href="#" class="ui-btn ui-btn-icon-right ui-icon-arrow-d ui-btn-icon-notext ui-icon-info">Info</a>
     </div>
-    </div>
+    
+</div>
+	</div><!-- /footer -->
+    		
+    <div data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" id="nav-panel">
+	  				<ul data-role="listview">
+					<li data-icon="delete"><a href="#" data-rel="close">ปิดเมนู</a></li>
+		  			<li><a href="#panel-fixed-page2">Accordion</a></li>
+		  			<li><a href="#profilePage" onClick="getUserDetail();">โปรไฟล์</a></li>
+          			<li><a href="#addReportPage" onclick="getCurrentPosition();">รายงานสถานการณ์</a></li>
+          			<li><a href="#panel-fixed-page2">Buttons</a></li>
+          			<li><a href="#" onClick="logOut();">Logout</a></li>
+	  			</ul>
+	</div><!-- /panel -->
+  </div>
 <!-----------------Stop of #homePage-------------->
 
- <!-- Start of second page: #profilePage -->
+ <!------------------------- Start #profilePage --------------------------->
 <div data-role="page" id="profilePage">
-	<div data-position="fixed" data-role="header" data-theme="b">
-		<a data-icon="back" data-iconpos="notext" href="#homePage">Home</a>
+	<div data-role="header" data-theme="b">
+		<a data-icon="back" data-iconpos="notext" href="#" data-rel="back">Home</a>
 		<h1>
 			Situation Report
 		</h1>
@@ -260,7 +287,7 @@
 								<li><strong>&nbsp;&nbsp;&nbsp;&nbsp;อีเมล์ : </strong><span id="spEmailPro">zsdsF</span></li>
                          </ul>
                             <ul data-role="listview" data-inset="true" data-shadow="false">
-                            <li><a href="#">Humans</a></li>
+                            <li><a href="#editProfilePage" onClick="getEditUserDetail();">แก้ไขข้อมูลผู้ใช้</a></li>
                             <li><a href="#">Humans</a></li>
                             </ul>
 						</div>
@@ -271,11 +298,12 @@
 			
 		</div><!--custom-corners-->
 	</div>
-	<div data-position="fixed" data-role="footer">
+	<div data-role="footer" data-theme="b">
 		<div data-role="header">
 			<h1>
 				Page Title
 			</h1>
+            
 			<div id="custom-border-radius">
 				<a class=
 				"ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-btn-icon-notext ui-icon-info"
@@ -284,6 +312,212 @@
 		</div>
 	</div><!-- /footer -->
 </div><!-- /page Register -->
+<!------------------------- Stop #profilePage --------------------------->
 
+<!------------------------- Start #editProfilePage --------------------------->
+<div data-role="page" id="editProfilePage">
+	<div data-role="header" data-theme="b">
+		<a data-icon="back" data-iconpos="notext" href="#" data-rel="back">Home</a>
+		<h1>
+			Situation Report
+		</h1>
+	</div>
+	<div data-role="content" id="contentEditProfile">
+    <div class="ui-corner-all custom-corners">
+			<div class="ui-bar ui-bar-a">
+				<h3>แก้ไขข้อมูลผู้ใช้</h3>
+			</div>
+			
+				<div class="ui-body ui-body-a">
+					<div class="ui-grid-solo" align="center" id="gridProDetail">
+						<div class="ui-block-a">
+                        <span><h6>&#8220;<code>แตะที่รูปเพื่อเปลี่ยนรูปประจำตัว</code>&#8221;</h6></span>
+                        <a href="#popupSelectWith" data-rel="popup" data-transition="pop" data-position-to="window"><img id="imgEditPropic" src="img/user-default.png"/></a>
+                       
+                       <div data-role="popup" id="popupSelectWith" data-theme="b">
+        					<ul data-role="listview" data-inset="true" style="min-width:210px;">
+            					<li data-role="list-divider">กรุณาเลือก</li>
+           						
+            					<li><a href="#" onClick="takeImage();">ถ่ายรูป</a></li>
+            					<li><a href="#" onClick="getImage();">เลือกจากอัลบั้ม</a></li>
+            					
+        					</ul>
+						</div>
+                       
+                       
+                        <ul data-role="listview" id="listProDetail">
+								<li>
+                                <div class="ui-grid-a">
+                                	<div class="ui-block-solo">
+								<input data-clear-btn="true" data-mini="true" id="nameEditInput" name=
+								"nameInput" placeholder="ชื่อจริง" type="text" value="" >
+                                <p id="pMsgEditRname"></p>
+                     				</div>
+                                	<div class="ui-block-solo">
+									<input data-clear-btn="true" data-mini="true" id="surnameEditInput" name=
+									"surnameInput" placeholder="นามสกุลจริง" type="text" value="">
+                     				<p id="pMsgEditSurname"></p>
+                                    </div>
+                                    
+                                   </div>
+                                    
+                             	</li>
+                                <li>
+                            
+                            <div class="ui-block-a">
+									<select id="genderEditSelect" data-inline="true" data-mini="true" name=
+									"select-choice-mini">
+									<option value="male">
+										เพศชาย
+									</option>
+									<option value="female">
+										เพศหญิง
+									</option>
+									<option value="other">
+										เพศอื่นๆ
+									</option>
+									</select>
+                                    <p id="pMsgEditGender"></p>
+                                    </div>
+                                    <div class="ui-block-b">
+								
+                                </div>
+                                
+                                </li>
+								<li>
+                              
+                                <fieldset id="bdateEditSelect" data-role="controlgroup" data-type="horizontal" data-mini="true">
+    							<legend>วันเกิด : วัน:เดือน:ปี</legend>
+                                    <input id="editBDate" name="editBDate" />
+    							
+								</fieldset>
+                              
+								<p id="pMsgEditBdate"></p>
+                                </li>
+								<li>
+						<input data-clear-btn="true" data-mini="true" id="emailEditInput" name=
+						"emailEditInput" placeholder="E-mail" type="text" value="">
+						<p id="pMsgEditE">
+						</p>
+							
+                        </li>
+                        <li>
+                        <div class="ui-grid-a">
+						<div class="ui-block-a">
+							<a class="ui-btn ui-mini ui-icon-back ui-btn-icon-left ui-corner-all exit activeOnce"
+							href="#" data-transition="none" data-rel="back">กลับ</a>
+						</div>
+						<div class="ui-block-b">
+							<a class=
+							"ui-btn ui-mini ui-icon-check ui-btn-icon-left ui-corner-all ui-btn-b activeOnce"
+							href="#" id="sumitEditBtn" data-transition="none" data-rel="back">เสร็จสิ้น</a>
+						</div>
+					</div>
+                        
+                        </li>
+                         </ul>
+						</div>
+					</div>
+				</div><!--ui-bar ui-bar-a-->
+				<!--<form id="regisForm" method="post" name="regisForm">-->
+				<!--secondPage-->
+			
+		</div>
+		<!--custom-corners-->
+	</div>
+	<div data-role="footer" data-theme="b">
+		<div data-role="header">
+			<h1>
+				Page Title
+			</h1>
+            
+			<div id="custom-border-radius">
+				<a class=
+				"ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-btn-icon-notext ui-icon-info"
+				data-rel="dialog" data-transition="pop" href="#info">info</a>
+			</div>
+		</div>
+	</div><!-- /footer -->
+</div><!-- /page Register -->
+<!------------------------- Stop #editProfilePage --------------------------->
+
+<!------------------------- Start #addReportPage --------------------------->
+<div data-role="page" id="addReportPage">
+	  <div data-position="fixed" data-role="header" data-theme="b">
+        <h1>Fixed header</h1>
+          <a href="#nav-panel"class="ui-btn ui-btn-b ui-btn-inline ui-corner-all">MENU</a>
+      </div><!-- /header -->
+		<div data-role="content">
+		  <div class="ui-grid-b" align="center">
+		   
+		      <div class="ui-grid-c">
+		        <div class="ui-block-a"><img name="" src="" width="32" height="32" alt=""></div>
+		        <div class="ui-block-b">username sername</div>
+		        <div class="ui-block-c">location</div>
+		        <div class="ui-block-d">date time</div>
+	          </div>
+		  
+		    
+		   <div class="ui-grid-a">
+           	<div class="ui-block-a">
+	         <button class="ui-btn ui-btn-in ui-mini ui-icon-plus ui-ic ui-btn-icon-left ui-corner-all" onclick="take_pic();">ถ่ายรูป</button>
+            </div>
+		   <div class="ui-block-b">
+		     <button class="ui-btn ui-mini ui-icon-search ui-ic ui-btn-icon-left ui-corner-all" data-theme="b" onclick="album_pic();">เลือกรูป</button>
+		   </div>
+          </div>
+		   <div class="ui-grid-solo"><img id="cameraImage"/></div>
+		    
+		    
+		    
+		   <div class="ui-grid-solo">location detail<div id="cur_position"></div></div>
+		   <div class="ui-grid-solo"><img id="map"/></div>
+		    
+            <div class="ui-grid-solo">
+           
+    <div class="ui-field-contain" align="left">
+         <label for="text-15">หัวข้อ:</label>
+         <input type="text" data-clear-btn="true" data-mini="true" name="text-15" id="text-15" value="">
+    </div>
+    
+    <div class="ui-field-contain" align="left">
+    <label for="textarea-14">รายละเอียด:</label>
+    <textarea data-mini="true" cols="40" rows="8" name="textarea-14" id="textarea-14"></textarea>
+    </div>
+    
+            </div>
+		   <div class="ui-grid-a">
+           	<div class="ui-block-a">
+	         <button class="ui-btn ui-btn-in ui-mini ui-icon-delete ui-ic ui-btn-icon-left ui-corner-all">ยกเลิก</button>
+            </div>
+		   <div class="ui-block-b">
+		     <button class="ui-btn ui-mini ui-icon-check ui-ic ui-btn-icon-left ui-corner-all" data-theme="b">เสร็จสิ้น</button>
+		   </div>
+          </div>
+	      </div>
+		  <br>
+	</div><!-- /content -->
+	  
+    <div data-role="footer" data-position="fixed" data-theme="b">
+		<div data-role="header">
+			<h1>
+				Page Title
+			</h1>
+            
+			<div id="custom-border-radius" data-theme="b">
+				<a class=
+				"ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-btn-icon-notext ui-icon-info"
+				data-rel="dialog" data-transition="pop" href="#info">info</a>
+			</div>
+		</div>
+	</div><!-- /footer -->
+  </div><!-- /page -->
+<!------------------------- Stop #addReportPage --------------------------->
 </body>
 </html>
+<!--<input id="bdateEditSubmit" type="button" data-icon="check" data-iconpos="notext" value="Icon only" data-mini="true" disabled="">
+<input id="nameEditSubmit" type="button" data-icon="check" data-iconpos="notext" value="Icon only" data-mini="true" disabled="">
+<input id="genderEditSubmit" type="button" data-icon="check" data-iconpos="notext" value="Icon only" data-mini="true" disabled="">
+<input id="bdateEditSubmit" type="button" data-icon="check" data-iconpos="notext" value="Icon only" data-mini="true" disabled="">
+<input id="emailEditSubmit" type="button" data-icon="check" data-iconpos="notext" value="Icon only" data-mini="true" disabled="">
+-->

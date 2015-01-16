@@ -2,20 +2,12 @@ var globalProfileImageURI;
 var editState = false;
 function getUserDetail (){
 		d = new Date();
-		var gd = "";
-		if(localStorage.userGender === "male"){
-				gd = "ชาย";
-				}else if(localStorage.userGender === "female"){
-					gd = "หญิง";}else{
-						gd = "อื่นๆ";}
 		loadingShow("#contentProfile");
 		$('#imgPropic').attr('src', serviceURL + "../img/userprofileimage/" + localStorage.userImageUrl +"?"+d.getTime());
 		$('#spNamePro').text(localStorage.userRName + ' ' + localStorage.userSurname);
-	
-		$('#spGenderPro').text(gd);
-		$('#spBirthPro').text(moment(localStorage.userBdate, 'YYYY-MM-DD', 'th').format('LL'));
+		$('#spGenderPro').text(localStorage.userGender);
+		$('#spBirthPro').text(localStorage.userBdate);
 		$('#spEmailPro').text(localStorage.userEmail);
-		console.log(gd);
 		console.log(localStorage.userBdate);
 		loadingHide("#contentProfile");
 }
@@ -29,20 +21,13 @@ function getEditUserDetail (){
 		$('#surnameEditInput').val(localStorage.userSurname);
 		var gen = $('#genderEditSelect');
 		gen.val(localStorage.userGender).attr('selected', true).siblings('option').removeAttr('selected');
-		gen.selectmenu().selectmenu('refresh', true);
-		
+		gen.selectmenu("refresh", true);
 		$('#genderEditSelect').val(localStorage.userGender);
+		$('#spBirthPro').text(localStorage.userBdate);
 		$('#emailEditInput').val(localStorage.userEmail);
 		loadingHide("#contentEditProfile");
-		$('#editBDate').combodate({
-        value: moment(localStorage.userBdate, 'YYYY-MM-DD'),
-		template:'DD MMMM YYYY',
-        minYear: 1900,
-        maxYear: moment().format('YYYY')
-    	});  
 }
 
-//////////////////////////////////////////////////////
 function getImage() {
 	// $('#cameraImage').css('visibility', 'hidden');
           // Retrieve image file location from specified source
@@ -63,7 +48,7 @@ function getImage() {
           );
 
       }
-//////////////////////////////////////////////////////	  
+	  
 function takeImage() {
 	
     navigator.camera.getPicture(getImageSuccess, function(message) {
@@ -80,7 +65,7 @@ function takeImage() {
     	}
 	);
 }
-//////////////////////////////////////////////////////	  
+	  
 function getImageSuccess(imageURI){
 	//$("#popupSelectWith").hide();
 	window.history.back();
@@ -113,7 +98,7 @@ function uploadPhotoProfileData(imageURI) {
           var ft = new FileTransfer();
           ft.upload(imageURI, encodeURI(serviceURL + "updatePicProfile.php"), win, fail, options);
       }
-//////////////////////////////////////////////////////
+
 function win(r) {
           console.log("Code = " + r.responseCode.toString()+"\n");
           console.log("Response = " + r.response.toString()+"\n");
@@ -132,7 +117,7 @@ function win(r) {
 		  loadingHide("#contentEditProfile");
           alert("An error has occurred: Code = " + error.code);
       }
-//////////////////////////////////////////////////////	 
+	 
 //function submitEditProfile(){
 //	
 //	uploadPhotoProfileData(globalProfileImageURI);
@@ -145,14 +130,8 @@ function editUserBindEvent(){
 	$("#surnameEditInput").on('focusin', function() {editState = false; })
 					   .on('keyup', function() {editState = true; })
 					   .on('focusout', updateSurName);
-	$("#genderEditSelect").on('change', updateGender);
-	$("#editBDate").on('change', updateBDate);
-	$("#emailEditInput").on('focusin', function() {editState = false; })
-						.on('keyup', function() {editState = true; })
-						.on('focusout', checkEditEmail);
-	
 }
-//////////////////////////////////////////////////////	
+	
 function updateRName (){
 	if(editState===true){
 	$("#pMsgEditRname").text("กำลังดำเนินการ").css("color", "blue").show();
@@ -198,7 +177,6 @@ function updateRName (){
 	return false;			
 			}
 	}
-//////////////////////////////////////////////////////
 function updateSurName (){
 	if(editState===true){
 	$("#pMsgEditSurname").text("กำลังดำเนินการ").css("color", "blue").show();
@@ -244,184 +222,3 @@ function updateSurName (){
 	return false;			
 			}
 	}
-//////////////////////////////////////////////////////
-function updateGender (){
-	
-	$("#pMsgEditGender").text("กำลังดำเนินการ").css("color", "blue").show();
-	var Id = localStorage.userId;
-	var g = $("#genderEditSelect").val();
-	var url = serviceURL + 'updateUserProfile.php';
-	
-		
-			$.ajax({
-				type: 'GET',
-				url: url,
-				contentType: "application/json",
-				dataType: 'jsonp',
-				data: {
-					userid: Id, 
-					gender: g
-				},
-				crossDomain: true,
-				timeout: 10000,
-				success: function(res) {
-					if (res.success === true) {
-						window.localStorage.userGender = g;
-						getUserDetail();
-						getEditUserDetail();
-						$("#pMsgEditGender").text("เรียบร้อยแล้ว").css("color", "green").fadeOut(3200);
-						console.log(res);
-					} else {
-						$("#pMsgEditGender").text("มีบางอย่างผิดพลาด").css("color", "red");
-						console.log(res.success);
-					}
-				},
-				error: function(e) {
-					console.log(e.message);
-					navigator.notification.alert("ERROR กรุณาตรวจสอบการเชื่อมต่อ อินเตอร์เน็ต ");
-				},
-				complete: function(e) {
-					console.log("complete");
-				}
-			});
-	
-	return false;			
-			
-	}
-	//////////////////////////////////////////////////////	
-function updateBDate (){
-	 var bday = moment($('#editBDate').val(), "DD-MM-YYYY").format('YYYY-MM-DD');
-	
-	$("#pMsgEditBdate").text("กำลังดำเนินการ").css("color", "blue").show();
-	var Id = localStorage.userId;
-	var bd = bday;
-	var url = serviceURL + 'updateUserProfile.php';
-	
-		if(bday !== "Invalid date"){
-			$.ajax({
-				type: 'GET',
-				url: url,
-				contentType: "application/json",
-				dataType: 'jsonp',
-				data: {
-					userid: Id, 
-					birthdate: bd
-				},
-				crossDomain: true,
-				timeout: 10000,
-				success: function(res) {
-					if (res.success === true) {
-						window.localStorage.userBdate = bd;
-						getUserDetail();
-						getEditUserDetail();
-						$("#pMsgEditBdate").text("เรียบร้อยแล้ว").css("color", "green").fadeOut(3200);
-						console.log(res);
-					} else {
-						$("#pMsgEditBdate").text("มีบางอย่างผิดพลาด").css("color", "red");
-						console.log(res.success);
-					}
-				},
-				error: function(e) {
-					console.log(e.message);
-					navigator.notification.alert("ERROR กรุณาตรวจสอบการเชื่อมต่อ อินเตอร์เน็ต ");
-				},
-				complete: function(e) {
-					console.log("complete");
-				}
-			});
-	} else {
-		$("#pMsgEditBdate").text("กรุณากรอกวันเกิดให้ถูกต้อง").css("color", "red").show();
-	}
-	return false;			
-			
-	}
-	//////////////////////////////////////////////////////	
-function updateEmail (){
-	
-	
-	var Id = localStorage.userId;
-	var e = $("#emailEditInput").val();
-	var url = serviceURL + 'updateUserProfile.php';
-	
-		
-			$.ajax({
-				type: 'GET',
-				url: url,
-				contentType: "application/json",
-				dataType: 'jsonp',
-				data: {
-					userid: Id, 
-					email: e
-				},
-				crossDomain: true,
-				timeout: 10000,
-				success: function(res) {
-					if (res.success === true) {
-						window.localStorage.userEmail = e;
-						getUserDetail();
-						getEditUserDetail();
-						$("#pMsgEditE").text("เปลี่ยน Email เรียบร้อยแล้ว").css("color", "green").fadeOut(3200);
-						console.log(res);
-					} else {
-						$("#pMsgEditE").text("มีบางอย่างผิดพลาด").css("color", "red");
-						console.log(res.success);
-					}
-				},
-				error: function(e) {
-					console.log(e.message);
-					navigator.notification.alert("ERROR กรุณาตรวจสอบการเชื่อมต่อ อินเตอร์เน็ต ");
-				},
-				complete: function(e) {
-					console.log("complete");
-				}
-			});
-	
-	return false;			
-			
-	}
-	
-//////////////////////////////////////////////////////////////////////////////
-function checkEditEmail() {
-	if(editState===true){
-	var e = $("#emailEditInput").val();
-	var url = serviceURL + 'checkUsedEmail.php';
-	$("#pMsgEditE").text("กำลังดำเนินการ").css("color", "blue").show();
-	if (e !== '') {
-		if (checkEmailRegEx(e) === true) {
-			$.ajax({
-				type: 'GET',
-				url: url,
-				contentType: "application/json",
-				dataType: 'jsonp',
-				data: {
-					email: e
-				},
-				crossDomain: true,
-				timeout: 10000,
-				success: function(res) {
-					if (res.success === true) {
-						$("#pMsgEditE").text(" Email นี้มีผู้ใช้แล้ว").css("color", "red");
-					} else {
-						
-						$("#pMsgEditE").text(" Email นี้สามารถใช้ได้").css("color", "green");
-						updateEmail();
-					}
-				},
-				error: function(e) {
-					console.log(e.message);
-					navigator.notification.alert("ERROR กรุณาตรวจสอบการเชื่อมต่อ อินเตอร์เน็ต");
-				},
-				complete: function(e) {
-					console.log("message");
-				}
-			});
-		} else {
-			$("#pMsgEditE").text(" กรุณากรอก Email ให้ถูกต้อง ").css("color", "red");
-		}
-	} else {
-		$("#pMsgEditE").text("กรุณากรอก Email").css("color", "red");
-	}
-	return false;
-	}
-}
-//////////////////////////////////////////////////////////////////////////////

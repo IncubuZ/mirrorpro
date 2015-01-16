@@ -1,3 +1,8 @@
+.controlgroup-textinput{
+    padding-top:.22em;
+    padding-bottom:.22em;
+}
+
 .custom-corners .ui-bar {
   -webkit-border-top-left-radius: inherit;
   border-top-left-radius: inherit;
@@ -39,10 +44,35 @@
 }
 #imgPropic {
 	border: 1px solid #000;
-	height: 160px;
-	width: 160px;
+	height: 130px;
+	width: 130px;
+	margin-right: 2em;
+	margin-bottom: 1em;
+	margin-left: 2em;
+	margin-top: 1px;
+}
+#imgEditPropic {
+	border: 1px solid #000;
+	height: 130px;
+	width: 130px;
 	margin-right: 2em;
 	margin-bottom: 2em;
 	margin-left: 2em;
-	margin-top: 1px;
+	margin-top: 0px;
+}
+#cameraImage {
+	width:400px;
+	height:300px;
+	border: 2px solid #666;
+ 	display: block;
+ 	visibility: hidden; 
+	margin: 1.0em auto; 
+    }
+#map {
+	width: 320px; 
+	height: 240px; 
+	border: 2px solid #666;
+ 	display: block;
+ 	visibility: hidden; 
+	margin: 1.0em auto; 
 }

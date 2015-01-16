@@ -6,5 +6,5 @@
             $(document).on('tap', function(e) {
                 $('.activeOnce').removeClass($.mobile.activeBtnClass);
             });
-			
+			moment.locale('th'); 
         });
