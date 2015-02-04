@@ -1,7 +1,7 @@
 var globalProfileImageURI;
 var editState = false;
 function getUserDetail (){
-		d = new Date();
+		var d = moment();
 		var gd = "";
 		if(localStorage.userGender === "male"){
 				gd = "ชาย";
@@ -9,7 +9,7 @@ function getUserDetail (){
 					gd = "หญิง";}else{
 						gd = "อื่นๆ";}
 		loadingShow("#contentProfile");
-		$('#imgPropic').attr('src', serviceURL + "../img/userprofileimage/" + localStorage.userImageUrl +"?"+d.getTime());
+		$('#imgPropic').attr('src', serviceURL + "../img/userprofileimage/" + localStorage.userImageUrl +"?"+d.format());
 		$('#spNamePro').text(localStorage.userRName + ' ' + localStorage.userSurname);
 	
 		$('#spGenderPro').text(gd);
@@ -22,9 +22,10 @@ function getUserDetail (){
 //////////////////////////////////////////////////////
 
 function getEditUserDetail (){
-		d = new Date();
-		loadingShow("#contentEditProfile");
-		$('#imgEditPropic').attr('src', serviceURL + "../img/userprofileimage/" + localStorage.userImageUrl+"?"+d.getTime());
+		clearCache();
+		var d = moment();
+		//loadingShow("#contentEditProfile");
+		$('#imgEditPropic').attr('src', serviceURL + "../img/userprofileimage/" + localStorage.userImageUrl+"?"+d.format());
 		$('#nameEditInput').val(localStorage.userRName);
 		$('#surnameEditInput').val(localStorage.userSurname);
 		var gen = $('#genderEditSelect');
@@ -33,7 +34,7 @@ function getEditUserDetail (){
 		
 		$('#genderEditSelect').val(localStorage.userGender);
 		$('#emailEditInput').val(localStorage.userEmail);
-		loadingHide("#contentEditProfile");
+		//loadingHide("#contentEditProfile");
 		$('#editBDate').combodate({
         value: moment(localStorage.userBdate, 'YYYY-MM-DD'),
 		template:'DD MMMM YYYY',
@@ -52,10 +53,10 @@ function getImage() {
                       quality : 100,
                       destinationType : navigator.camera.DestinationType.FILE_URI,
                       sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY,
-					  targetWidth: 320,
-        			  targetHeight: 320,
+					  targetWidth: 130,
+        			  targetHeight: 130,
 					  correctOrientation: 1,
-					  saveToPhotoAlbum: 1,
+					  saveToPhotoAlbum: 0,
         			  allowEdit: 1
 					 
 					 
@@ -71,10 +72,10 @@ function takeImage() {
                   }, {
         quality: 100,
         destinationType: Camera.DestinationType.FILE_URI,
-        targetWidth: 320,
-        targetHeight: 320,
+        targetWidth: 130,
+        targetHeight: 130,
         correctOrientation: 1,
-		saveToPhotoAlbum: 1,
+		saveToPhotoAlbum: 0,
         allowEdit: 1
         
     	}
@@ -83,21 +84,22 @@ function takeImage() {
 //////////////////////////////////////////////////////	  
 function getImageSuccess(imageURI){
 	//$("#popupSelectWith").hide();
-	window.history.back();
+	//window.history.back();
 	globalProfileImageURI = imageURI;
 	$('#imgEditPropic').attr('src', globalProfileImageURI);
-	
+	$('#imgPropic').attr('src', globalProfileImageURI);
+	var d = moment();
 	//var image = document.getElementById('imgEditPropic');
       //  image.src = imageURI;
         //$('#cameraImage').css('visibility', 'visible');
 		//globalImageURI = imageURI;
 		console.log(globalProfileImageURI);
-		uploadPhotoProfileData(globalProfileImageURI);
+		uploadPhotoProfileData(imageURI);
 	
 	}
 function uploadPhotoProfileData(imageURI) {
 			
-		  loadingShow("#contentEditProfile");
+		  //loadingShow("#contentEditProfile");
           var options = new FileUploadOptions();
           options.fileKey="file";
           options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
@@ -111,25 +113,25 @@ function uploadPhotoProfileData(imageURI) {
           options.chunkedMode = false;
 
           var ft = new FileTransfer();
-          ft.upload(imageURI, encodeURI(serviceURL + "updatePicProfile.php"), win, fail, options);
+          ft.upload(imageURI, encodeURI(serviceURL + "updatePicProfile.php"), uploadProPicwin, uploadProPicfail, options);
       }
 //////////////////////////////////////////////////////
-function win(r) {
+function uploadProPicwin(r) {
           console.log("Code = " + r.responseCode.toString()+"\n");
           console.log("Response = " + r.response.toString()+"\n");
           console.log("Sent = " + r.bytesSent.toString()+"\n");
 		  
-          alert("Code Slayer!!!");
+          alert("เปลี่ยนรูปโปรไฟล์ เรียบร้อยแล้ว!");
 		  //$('#imgPropic').attr('src', globalProfileImageURI);
 		  getUserDetail();
-		   loadingHide("#contentEditProfile");
+		   //loadingHide("#contentEditProfile");
 		  
 		  //$.mobile.changePage("#profilePage", { changeHash: false });
 		  //$.mobile.changePage( "../resources/us.html", { transition: "slideup", changeHash: false });
       }
 
-      function fail(error) {
-		  loadingHide("#contentEditProfile");
+      function uploadProPicfail(error) {
+		  //loadingHide("#contentEditProfile");
           alert("An error has occurred: Code = " + error.code);
       }
 //////////////////////////////////////////////////////	 

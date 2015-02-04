@@ -250,6 +250,13 @@ module.exports = [
         "clobbers": [
             "navigator.geolocation"
         ]
+    },
+    {
+        "file": "plugins/at.modalog.cordova.plugin.cache/www/Cache.js",
+        "id": "at.modalog.cordova.plugin.cache.Cache",
+        "clobbers": [
+            "cache"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -262,7 +269,8 @@ module.exports.metadata =
     "org.apache.cordova.file-transfer": "0.4.8",
     "org.apache.cordova.splashscreen": "0.3.5",
     "org.apache.cordova.home": "0.2.6",
-    "org.apache.cordova.geolocation": "0.3.11"
+    "org.apache.cordova.geolocation": "0.3.11",
+    "at.modalog.cordova.plugin.cache": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

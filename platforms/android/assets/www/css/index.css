@@ -2,6 +2,10 @@
     padding-top:.22em;
     padding-bottom:.22em;
 }
+#miniProdetail {
+	width: 60%;
+}
+
 
 .custom-corners .ui-bar {
   -webkit-border-top-left-radius: inherit;
@@ -61,18 +65,55 @@
 	margin-top: 0px;
 }
 #cameraImage {
-	width:400px;
-	height:300px;
-	border: 2px solid #666;
- 	display: block;
- 	visibility: hidden; 
-	margin: 1.0em auto; 
+	width: 100%;
+	height: 50%;
+	
+	display: block;
+	visibility: hidden;
+	margin-top: auto;
+	margin-right: auto;
+	margin-bottom: 1em;
+	margin-left: auto;
     }
 #map {
-	width: 320px; 
-	height: 240px; 
-	border: 2px solid #666;
+	width: 100%;
+	height: 50%;
+
  	display: block;
  	visibility: hidden; 
 	margin: 1.0em auto; 
+}
+
+#miniPropic {
+	width: 80px;
+	margin-right: 1em;
+	margin-top: 0.5em;
+	margin-bottom: auto;
+	margin-left: auto;
+	}
+#imgReport {
+	width: 100%;
+	height: 50%;
+	
+	display: block;
+	margin-top: auto;
+	margin-right: auto;
+	margin-bottom: 1em;
+	margin-left: auto;
+    }
+#imgMapReport {
+	width: 100%; 
+	height: 50%; 
+	
+ 	display: block;
+	margin: 1.0em auto; 
+}
+#miniReportdetail {
+    width: 60%;
+}
+#miniPropicHome {
+    width: 40px;
+    margin-right: 1em;
+    margin-bottom: auto;
+    margin-left: auto;
 }

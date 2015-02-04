@@ -9,7 +9,8 @@ $(document).ready(function() {
 	$("#regisPage").on("pagecreate", regisBindEvent);
 	//$("#profilePage").on("pagecreate", getUserDetail);
 	$("#editProfilePage").on("pagecreate", editUserBindEvent);
-	
+	$("#addReportPage").on("pagecreate", addReportBindEvent);
+	loadFeed();
 	
 });
 
@@ -46,12 +47,31 @@ function onBackbutton(e){
 			   				   function(){console.error("Error launching home intent");});
        }
        else {
-           navigator.app.backHistory()
+           navigator.app.backHistory();
        }
 	
 	}
+function exitApp(){
+	navigator.app.exitApp();
+	}
 function deviceReady() {
+	 clearCache();
 	checkPreAuth();
 	document.addEventListener("backbutton", onBackbutton, false);
 	 console.log("navigator.geolocation works well");
 }
+function clearCache(){
+	var success = function(status) {
+            //alert('Message: ' + status);
+			console.log('Message: ' + status);
+        }
+
+        var error = function(status) {
+            //alert('Error: ' + status);
+			console.log('Error: ' + status);
+        }
+
+        window.cache.clear( success, error );
+	
+	
+	}

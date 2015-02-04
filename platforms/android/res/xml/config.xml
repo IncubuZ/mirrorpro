@@ -36,4 +36,10 @@
     <feature name="Home">
         <param name="android-package" value="org.apache.cordova.home.Home" />
     </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
+    </feature>
+    <feature name="Cache">
+        <param name="android-package" value="at.modalog.cordova.plugin.cache.Cache" />
+    </feature>
 </widget>

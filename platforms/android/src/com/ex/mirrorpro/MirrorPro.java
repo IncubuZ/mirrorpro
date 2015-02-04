@@ -33,6 +33,7 @@ public class MirrorPro extends CordovaActivity
         //super.loadUrl(Config.getStartUrl());
         super.setIntegerProperty("splashscreen", R.drawable.splash);
         super.loadUrl("file:///android_asset/www/index.html", 10000);
+        //super.loadUrl("file:///android_asset/www/geo.html");
     }
 }
 

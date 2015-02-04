@@ -35,6 +35,14 @@
                         {
                             "xml": "<feature name=\"Home\"><param name=\"android-package\" value=\"org.apache.cordova.home.Home\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.GeoBroker\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Cache\"><param name=\"android-package\" value=\"at.modalog.cordova.plugin.cache.Cache\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -45,6 +53,18 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 3
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -71,6 +91,12 @@
             "PACKAGE_NAME": "com.ex.mirrorpro"
         },
         "org.apache.cordova.home": {
+            "PACKAGE_NAME": "com.ex.mirrorpro"
+        },
+        "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "com.ex.mirrorpro"
+        },
+        "at.modalog.cordova.plugin.cache": {
             "PACKAGE_NAME": "com.ex.mirrorpro"
         }
     },
