@@ -1,19 +1,29 @@
 //localStorage.serviceURL = "http://situationreport.meximas.com/services/";
 var serviceURL = localStorage.serviceURL;
+
 $(document).ready(function() {
 	FastClick.attach(document.body);
-	console.log("FastClickReady");
+	
 	loadingShow("#firstPage");
 	document.addEventListener("deviceready", deviceReady, true);
+	
 	$("#loginPage").on("pagecreate", loginBindEvent);
 	$("#regisPage").on("pagecreate", regisBindEvent);
 	//$("#profilePage").on("pagecreate", getUserDetail);
 	$("#editProfilePage").on("pagecreate", editUserBindEvent);
 	$("#addReportPage").on("pagecreate", addReportBindEvent);
-	loadFeed();
+	$("#editReportPage").on("pagecreate", editReportBindEvent);
+	$("#createGroupPage").on("pagecreate", createGroupBindEvent);
+	$("#homePage").on("pagecreate", function (){checkGroup();loadFeed();});
+	
+	
 	
 });
-
+$("#mapPage").on( "pageshow", function( event, data ){
+    var center = map.getCenter();
+    google.maps.event.trigger(map, "resize");
+    map.setCenter(center);
+});
 function checkPreAuth() {
 	console.log("checkPreAuth");
 	if (window.localStorage.username !== undefined && window.localStorage.password !== undefined) {
@@ -52,13 +62,14 @@ function onBackbutton(e){
 	
 	}
 function exitApp(){
+	clearCache();//
 	navigator.app.exitApp();
 	}
 function deviceReady() {
 	 clearCache();
 	checkPreAuth();
 	document.addEventListener("backbutton", onBackbutton, false);
-	 console.log("navigator.geolocation works well");
+	 console.log("deviceReady");
 }
 function clearCache(){
 	var success = function(status) {
@@ -74,4 +85,66 @@ function clearCache(){
         window.cache.clear( success, error );
 	
 	
+	}
+	
+function checkGroup(){
+	
+	/*if (window.localStorage.userBdate==='0000-00-00'){
+	console.log(window.localStorage.userGroup);
+	}*/
+	if (window.localStorage.userGroup==='000000'){
+		$('.disGroupBtn').addClass("ui-state-disabled");
+		//$('#groupAlert').popup( "open" );
+		
+    		if (checkNoGroupAlert() !== true){
+        		  
+				/*$('#groupAlert').popup({positionTo: "origin"});
+				$('#groupAlert').popup("open");*/  
+				$.mobile.changePage("#groupAlertPage");  
+        		//window.localStorage.setItem("firstlaunch", "0");
+    		}
+			
+			
+			
+	console.log(window.localStorage.userGroup);
+	
+	}else{
+		$('.disGroupBtn').removeClass("ui-state-disabled");
+		}
+
+}
+
+	
+	
+/*$(document).on("pageshow", "#homePage", function(){
+    //alert(IsFirstLaunch());
+	
+	
+	
+});*/
+function setNoGroupAlert(){
+	window.localStorage.setItem("noGroupAlert", "0");
+	}
+
+	
+function IsFirstLaunch(){
+    var fl = window.localStorage.getItem("firstlaunch");
+    if (fl && parseInt(fl) == 0){
+        return false;
+    } else {        
+        window.localStorage.setItem("firstlaunch", "0");
+        return true;
+    }
+}
+function checkNoGroupAlert(){
+    			var fl = window.localStorage.getItem("noGroupAlert");
+    			if (fl && parseInt(fl) === 0){
+        				return true;
+    				} else {        
+        				//window.localStorage.setItem("firstlaunch", "0");
+        				return false;
+    		}
+	}
+function testVar(){
+	console.log(localStorage.userGroup);
 	}

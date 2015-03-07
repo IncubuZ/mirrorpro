@@ -246,6 +246,7 @@ function win(r) {
           alert("เพิ่มรายงานเรียบร้อยแล้ว!");
 		  //$('#imgPropic').attr('src', globalProfileImageURI);
 		  //getUserDetail();
+		  loadFeed();
 		  window.history.back();
 		 loadingHide("#contentAddReport");
 		   

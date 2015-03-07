@@ -4,6 +4,7 @@ var passState = false;
 var emailState = false;
 var realNameState = false;
 var realSNameState = false;
+var bDateState = false;
 var userMsgD = " สามารถใช้อักษร a-z,0-9,_,- ความยาว 4-15 ตัว ";
 var passMsgD = " สามารถใช้อักษร a-Z,0-9,_,- ความยาว 5-15 ตัว ";
 //////////////////////////////////////////////////////////////////////////////
@@ -13,6 +14,12 @@ function loginBindEvent() {
 }
 //////////////////////////////////////////////////////////////////////////////
 function regisBindEvent() {
+	$('#regisBDate').combodate({
+        value: moment(localStorage.userBdate, 'YYYY-MM-DD'),
+		template:'DD MMMM YYYY',
+        minYear: 1900,
+        maxYear: moment().format('YYYY')
+    	}); 
 	validAll();
 	$("#userInputRegis").on('focusout', checkUsedName).on('focusin', function() {
 		$("#pMsgU").text(userMsgD).css("color", "black");
@@ -41,6 +48,16 @@ function regisBindEvent() {
 			validAll();
 		}
 	});
+	$("#regisBDate").on('change', function() {
+		if ($("#regisBDate").val()) {
+			bDateState = true;
+			validAll();
+		} else {
+			bDateState = false;
+			validAll();
+		}
+	});
+	
 	$("#sumitBtn").on("click", handleRegis);
 }
 //////////////////////////////////////////////////////////////////////////////
@@ -81,11 +98,15 @@ function handleLogin() {
 					window.localStorage.userGender = res.user_gender;
 					window.localStorage.userImageUrl = res.user_imageUrl;
 					window.localStorage.userStatus = res.user_status;
+					window.localStorage.userGroup = res.user_group;
+					console.log(typeof res.user_group);
 					//window.localStorage.userId = res.user_id;
 					//window.location.replace(some.html);
 					//window.open("home.html", '_self');
 					 $(form)[0].reset();
 					$.mobile.changePage("#homePage");
+					checkGroup();
+					loadFeed();
 				} else {
 					navigator.notification.alert("Your login failed", function() {});
 				}
@@ -123,6 +144,8 @@ function handleRegis() {
 	var rn = $("#nameInput", form).val();
 	var rsn = $("#surnameInput", form).val();
 	var g = $("#genderSelect", form).val();
+	var bd = moment($('#regisBDate').val(), "DD-MM-YYYY").format('YYYY-MM-DD');
+	console.log(bd);
 	loadingShow("#contentRegis");
 	if (validAll()) {
 		$.ajax({
@@ -136,7 +159,8 @@ function handleRegis() {
 				email: e,
 				realname: rn,
 				realsname: rsn,
-				gender: g
+				gender: g,
+				bday: bd
 			},
 			crossDomain: true,
 			timeout: 10000,
@@ -153,6 +177,7 @@ function handleRegis() {
 					window.localStorage.userGender = res.user_gender;
 					window.localStorage.userImageUrl = res.user_imageUrl;
 					window.localStorage.userStatus = res.user_status;
+					window.localStorage.userGroup = res.user_group;
 					//window.localStorage.userId = res.user_id;
 					//window.location.replace(some.html);
 					//window.open("home.html", '_self');
@@ -167,6 +192,8 @@ function handleRegis() {
 					realSNameState = false;
 					validAll();
 					$.mobile.changePage("#homePage");
+					checkGroup();
+					loadFeed();
 				} else {
 					navigator.notification.alert("Your login failed", function() {});
 					
@@ -203,7 +230,7 @@ function dateNow() {
 //////////////////////////////////////////////////////////////////////////////
 function validAll() {
 	if (userState === true && passState === true && emailState === true && realNameState === true &&
-		realSNameState === true) {
+		realSNameState === true && bDateState === true) {
 		$("#sumitBtn").removeClass("ui-state-disabled");
 		return true;
 	} else {
@@ -400,6 +427,8 @@ function logOut() {
 	localStorage.removeItem("userGender");
 	localStorage.removeItem("userImageUrl");
 	localStorage.removeItem("userStatus");
+	localStorage.removeItem("userGroup");
+	localStorage.removeItem("noGroupAlert");
 	console.log("LogOut");
 	$.mobile.changePage("#loginRegisPage");
 	//window.open("login_regis.html",'_self');

@@ -117,3 +117,35 @@
     margin-bottom: auto;
     margin-left: auto;
 }
+span#spContent{  
+    word-wrap:break-word;  
+}  
+#imgOtherPropic {
+	border: 1px solid #000;
+	height: 130px;
+	width: 130px;
+	margin-right: 2em;
+	margin-bottom: 1em;
+	margin-left: 2em;
+	margin-top: 1px;
+}
+
+/*.hidden {
+    position: absolute;
+    top:-999;
+    z-index: -9999;
+}*/
+/*.ui-content {
+    padding: 0;
+}*/
+/*.mapcontent {
+    padding: 0;
+}
+.forMap {
+    position: absolute;
+    top:0;
+    right:0;
+}*/
+#mapPage, #map-canvas { width: 100%; height: 100%; padding: 0;}
+
+.viewer { height: 320px; width: 100%; }

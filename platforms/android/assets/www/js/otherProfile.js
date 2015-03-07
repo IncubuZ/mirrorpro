@@ -1,7 +1,75 @@
-var globalProfileImageURI;
+function getOtherUserDetail (otherUserId){
+	loadingShow("#contentOtherProfile");
+	$.mobile.loading('show');
+	var url = serviceURL + 'getOtherUserDetail.php';
+	var ouid = otherUserId;
+	var d = moment();
+	var gd = "";
+	console.log(otherUserId);
+	$.ajax({
+			type: 'GET',
+			url: url,
+			contentType: "application/json",
+			dataType: 'jsonp',
+			data: {
+				otherUId: ouid
+			},
+			crossDomain: true,
+			timeout: 10000,
+			success: function(res) {
+				//var user = res.item;
+				console.log(res);
+				console.log(!jQuery.isEmptyObject(res));
+				if (!jQuery.isEmptyObject(res)) {
+					//store
+				/*	console.log(res.user_id);
+					window.localStorage.username = u;
+					window.localStorage.password = p;
+					window.localStorage.userId = res.user_id;
+					window.localStorage.userRName = res.user_rname;
+					window.localStorage.userSurname = res.user_surname;
+					window.localStorage.userEmail = res.user_email;
+					window.localStorage.userBdate = res.user_bdate;
+					window.localStorage.userGender = res.user_gender;
+					window.localStorage.userImageUrl = res.user_imageUrl;
+					window.localStorage.userStatus = res.user_status;*/
+					
+		if(res.user_gender === "male"){
+				gd = "ชาย";
+				}else if(res.user_gender === "female"){
+					gd = "หญิง";}else{
+						gd = "อื่นๆ";}
+		$('#imgOtherPropic').attr('src', serviceURL + "../img/userprofileimage/" + res.user_imageUrl +"?"+d.format());
+		$('#spNameOtherPro').text(res.user_rname + ' ' + res.user_surname);
+	
+		$('#spGenderOtherPro').text(gd);
+		$('#spBirthOtherPro').text(moment(res.user_bdate, 'YYYY-MM-DD', 'th').format('LL'));
+		$('#spEmailOtherPro').text(res.user_email);
+		$( "#getDetailThisUser" ).data( "otherUId", res.user_id);
+		console.log($( "#getDetailThisUser" ).data( "otherUId"));
+		console.log(gd);
+				} else {
+					navigator.notification.alert("failed", function() {});
+				}
+					loadingHide("#contentOtherProfile");
+					$.mobile.loading('hide');
+
+			},
+			error: function(e) {
+				console.log(e.message);
+				navigator.notification.alert("ERROR กรุณาตรวจสอบการเชื่อมต่อ อินเตอร์เน็ต ");
+				loadingHide("#contentOtherProfile");
+				$.mobile.loading('hide');
+
+			},
+			complete: function(e) {
+				console.log(e);
+			}
+		});
+	}
+/*var globalProfileImageURI;
 var editState = false;
 function getUserDetail (){
-		clearCache();//
 		var d = moment();
 		var gd = "";
 		if(localStorage.userGender === "male"){
@@ -46,7 +114,6 @@ function getEditUserDetail (){
 
 //////////////////////////////////////////////////////
 function getImage() {
-	clearCache();//
 	// $('#cameraImage').css('visibility', 'hidden');
           // Retrieve image file location from specified source
           navigator.camera.getPicture(getImageSuccess, function(message) {
@@ -68,7 +135,7 @@ function getImage() {
       }
 //////////////////////////////////////////////////////	  
 function takeImage() {
-	clearCache();//
+	
     navigator.camera.getPicture(getImageSuccess, function(message) {
                       alert('get picture failed');
                   }, {
@@ -429,8 +496,7 @@ function checkEditEmail() {
 	}
 }
 //////////////////////////////////////////////////////////////////////////////
-/*function getOtherUserDetail (){
-		clearCache();//
+function getOtherUserDetail (){
 		var d = moment();
 		var gd = "";
 		if(localStorage.userGender === "male"){

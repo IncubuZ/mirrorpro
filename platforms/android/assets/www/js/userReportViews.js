@@ -1,16 +1,33 @@
-var reportHtml;
-function loadFeed(){
+var uid;
+function loadThisUserReport(){uid = window.localStorage.userId;loadUserReport();}
+function loadOtherUserReport(){uid = $( "#getDetailThisUser" ).data( "otherUId");loadUserReport();}
+function loadUserReport(){
 	clearCache();//
-	loadingShow("#contentHome");
-	var output = $('#feedMiddle');
+	loadingShow("#contentUserReport");
+	var output = $('#userReportMiddle');
+	
+	/*if(!$( "#getDetailThisUser" ).attr( "data-otherUId")){
+		uid = window.localStorage.userId;
+		}else if($( "#getDetailThisUser" ).data( "otherUId") !== 'undifined'){
+			uid = $( "#getDetailThisUser" ).data( "otherUId");
+			
+			}*/
+	console.log($( "#getDetailThisUser" ).data( "otherUId"));
+	console.log(uid);
 	output.empty();
-	$('#feedBottom').empty();
-	$('#feedTop').empty();
-	var url = serviceURL + 'loadFeed.php';
+	$('#userReportBottom').empty();
+	$('#userReportTop').empty();
+	var url = serviceURL + 'loadUserReport.php';
 	$.ajax({
+		type: 'GET',
 		url: url,
+		contentType: "application/json",
 		dataType: 'jsonp',
+		data: {
+				userid: uid
+			},
 		//jsonp: 'jsoncallback',
+		crossDomain: true,
 		timeout: 10000,
 		success: function(data, status){
 			console.log(status);
@@ -29,58 +46,73 @@ function loadFeed(){
 
 				output.append(feed);
 			});*/
-			
+			if (!jQuery.isEmptyObject(data)) {
 			$.each(data, function(i,item){ 
-			
+			if(uid === window.localStorage.userId){
+				htmlReportUser(item);
+			}else{
 				htmlReport(item);
+				}
 				output.append(reportHtml);
-				loadingHide("#contentHome");
+				loadingHide("#contentUserReport");
 			});
+			}else{
+				loadingHide("#contentUserReport");
+				$("#pMsgUserReport").text('คุณยังไม่มีรายงาน.').show().css("color", "green").fadeOut(3200);
+			console.log(output.html());
+				}
 		},
 		error: function(){
-		   output.text('พบข้อผิดพลาดในการโหลดข้อมูล!!');
-		   				loadingHide("#contentHome");
+		   output.text('พบข้อผิดพลาดในการโหลดข้อมูล!!').show().css("color", "red").fadeOut(3200);
+		   				loadingHide("#contentUserReport");
 
 		}
 	});
 	
 }
 
-function loadNewFeed(){
+function loadNewUserReport(){
 	
-	var output = $('#feedTop');	
+	var output = $('#userReportTop');	
 	var ff = 'new';
-	var url = serviceURL + 'loadFeed.php';
+	var url = serviceURL + 'loadUserReport.php';
 	
 	console.log(output.html().length);
 ///////////////////////////////////////////////////////////////////////////////////	
 	if(output.html().length===0){
-		var lastDiv = $('#feedMiddle').children('div:first-child');
+		var lastDiv = $('#userReportMiddle').children('div:first-child');
 		var lastDivDate = lastDiv.data('report-date');
 		var lastDivId = lastDiv.data('report-id');
 		console.log(lastDivId);
 		console.log(ff);
-		loadNewFeedAjax(output,ff,url,lastDiv,lastDivDate,lastDivId);
+		loadNewUserReportAjax(output,ff,url,lastDiv,lastDivDate,lastDivId);
 ///////////////////////////////////////////////////////////////////////////////////	
 	}else{
 		
-	var lastDiv = $('#feedTop').children('div:first-child');
+	var lastDiv = $('#userReportTop').children('div:first-child');
 	var lastDivDate = lastDiv.data('report-date');
 	var lastDivId = lastDiv.data('report-id');
 	console.log(lastDivId);
 	console.log(ff);
-	loadNewFeedAjax(output,ff,url,lastDiv,lastDivDate,lastDivId);
+	loadNewUserReportAjax(output,ff,url,lastDiv,lastDivDate,lastDivId);
 	}
 }
 /////////////////////////////////////////////////////////////////////////////////////////////	
-function loadNewFeedAjax(output,ff,url,lastDiv,lastDivDate,lastDivId){
+function loadNewUserReportAjax(output,ff,url,lastDiv,lastDivDate,lastDivId){
+	/*var uid;
+	if($( "#getDetailThisUser" ).data( "otherUId") !== 'undifined'){
+		uid = $( "#getDetailThisUser" ).data( "otherUId");
+		}else{
+			uid = localStorage.userId;
+			}*/
 	$.ajax({
 		type: 'GET',
 		url: url,
 		contentType: "application/json",
 		dataType: 'jsonp',
-		data: {
-				feedFlag: ff,
+		data: { 
+				userid: uid,
+				userReportFlag: ff,
 				lastRepViewDate: lastDivDate,
 				lastRepViewId: lastDivId
 			},
@@ -94,59 +126,70 @@ function loadNewFeedAjax(output,ff,url,lastDiv,lastDivDate,lastDivId){
 		
 		if (!jQuery.isEmptyObject(data)) {
 			$.each(data, function(i,item){ 
+				if(uid === window.localStorage.userId){
+				htmlReportUser(item);
+			}else{
 				htmlReport(item);
+				}
 				output.prepend(reportHtml);
 			});
 		}else{
-			$("#pMsgFeed").text('ฟีดข่าวล่าสุดแล้ว.').show().css("color", "green").fadeOut(3200);
+			$("#pMsgUserReport").text('ฟีดข่าวล่าสุดแล้ว.').show().css("color", "green").fadeOut(3200);
 			console.log(output.html());
 			//output.empty();
 			}
 		},
 		error: function(){
 			console.log(output.html().length);
-		   output.text('พบข้อผิดพลาดในการโหลดข้อมูล!!');
+		   output.text('พบข้อผิดพลาดในการโหลดข้อมูล!!').show().css("color", "red").fadeOut(3200);
 		}
 	});
 	}
 	
 /////////////////////////////////////////////////////////////////////////////////////////////	
-function loadOldFeed(){
+function loadOldUserReport(){
 	
 	
-	var output = $('#feedBottom');	
+	var output = $('#userReportBottom');	
 	var ff = 'old';
-	var url = serviceURL + 'loadFeed.php';
+	var url = serviceURL + 'loadUserReport.php';
 	
 	console.log(output.html().length);
 ///////////////////////////////////////////////////////////////////////////////////	
 	if(output.html().length===0){
-		var lastDiv = $('#feedMiddle').children('div:last-child');
+		var lastDiv = $('#userReportMiddle').children('div:last-child');
 		var lastDivDate = lastDiv.data('report-date');
 		var lastDivId = lastDiv.data('report-id');
 		console.log(lastDivId);
 		console.log(ff);
-		loadOldFeedAjax(output,ff,url,lastDiv,lastDivDate,lastDivId);
+		loadOldUserReportAjax(output,ff,url,lastDiv,lastDivDate,lastDivId);
 ///////////////////////////////////////////////////////////////////////////////////	
 	}else{
 		
-	var lastDiv = $('#feedBottom').children('div:last-child');
+	var lastDiv = $('#userReportBottom').children('div:last-child');
 	var lastDivDate = lastDiv.data('report-date');
 	var lastDivId = lastDiv.data('report-id');
 	console.log(lastDivId);
 	console.log(ff);
-	loadOldFeedAjax(output,ff,url,lastDiv,lastDivDate,lastDivId);
+	loadOldUserReportAjax(output,ff,url,lastDiv,lastDivDate,lastDivId);
 	}
 }
 
-function loadOldFeedAjax(output,ff,url,lastDiv,lastDivDate,lastDivId){
+function loadOldUserReportAjax(output,ff,url,lastDiv,lastDivDate,lastDivId){
+	/*var uid;
+	if($( "#getDetailThisUser" ).data( "otherUId") !== 'undifined'){
+		uid = $( "#getDetailThisUser" ).data( "otherUId");
+		}else{
+			uid = localStorage.userId;
+			}*/
 	$.ajax({
 		type: 'GET',
 		url: url,
 		contentType: "application/json",
 		dataType: 'jsonp',
-		data: {
-				feedFlag: ff,
+		data: { 
+				userid: uid,
+				userReportFlag: ff,
 				lastRepViewDate: lastDivDate,
 				lastRepViewId: lastDivId
 			},
@@ -160,27 +203,27 @@ function loadOldFeedAjax(output,ff,url,lastDiv,lastDivDate,lastDivId){
 		
 		if (!jQuery.isEmptyObject(data)) {
 			$.each(data, function(i,item){ 
-			//var mapwidth = parseInt($('#imgMapReport').css("width"), 10); // remove 'px' from width value
-			//var mapheight = parseInt($('#imgMapReport').css("height"), 10);
+			if(uid === window.localStorage.userId){
+				htmlReportUser(item);
+			}else{
 				htmlReport(item);
-//' + mapwidth + "x" + mapheight + '
+				}
 				output.append(reportHtml);
 			});
 		}else{
-			$("#pMsgFeedB").text('ฟีดข่าวเก่าสุดแล้ว.').show().css("color", "green").fadeOut(3200);
+			$("#pMsgUserReportB").text('ฟีดข่าวเก่าสุดแล้ว.').show().css("color", "green").fadeOut(3200);
 			console.log(output.html());
 			//output.empty();
 			}
 		},
 		error: function(){
 			console.log(output.html().length);
-		   output.text('พบข้อผิดพลาดในการโหลดข้อมูล!!');
+		   output.text('พบข้อผิดพลาดในการโหลดข้อมูล!!').show().css("color", "red").fadeOut(3200);
 		}
 	});
 	}
 	
-	
-function htmlReport(item){
+function htmlReportUser(item){
 	var d = moment();
 	var de = moment(item.report_date, 'YYYY-MM-DD HH:mm:ss', 'th');
 	reportHtml = '<div class="ui-corner-all custom-corners" id="reportView" data-report-date="'+item.report_date+'" data-report-id="'+item.report_id+'" data-report-by="'+item.report_by+'"><a href="#otherProfilePage" class="ui-corner-all" id="lnkThisUpro" onClick="getOtherUserDetail(' + item.report_by + ')"><div class="ui-bar ui-bar-b"><h3><strong><span id="spNameFeed">' + item.report_realNameBy
@@ -196,7 +239,12 @@ function htmlReport(item){
 				 + '"></a><b>สถานที่:</b> <em><span id="spLocatReport">' + item.report_locat
 				 + '</span></em><br><a href="#mapPage" id="lnkThisMap" data-ajax="false" onClick="showThisMap('+ item.report_lat + ", " + item.report_long +')"><img id="imgMapReport" src="http://maps.googleapis.com/maps/api/staticmap?center=' + item.report_lat + "," + item.report_long
 				 + '&zoom=16&size=400x400&maptype=roadmap&markers=color:green%7C' + item.report_lat + "," + item.report_long
-				 + '&sensor=true"></a></a></div></div><br>';
+				 + '&sensor=true"></a>'
+				 + '<div class="ui-grid-a"><div class="ui-block-a">'
+				 + '<a class="ui-btn ui-mini ui-icon-refresh ui-btn-icon-left ui-corner-all activeOnce" href="#editReportPage" id="editUserReportBtn" data-transition="none" onClick="getEditReport('+"'"+ item.report_id +"', " +"'"+item.report_title + "', " +"'"+ encodeURI(item.report_content) +"'"+');">แก้ไข</a>'
+            	 + '</div><div class="ui-block-b">'
+				 + '<a class="ui-btn ui-mini ui-icon-refresh ui-btn-icon-left ui-corner-all activeOnce" href="#deleteReportDialog" id="delReportPopupBtn" data-rel="popup" data-position-to="window" data-transition="pop" onClick="setDelReportId(' +"'"+ item.report_id + "'"+')">ลบ</a>'
+		   		 + '</div></div></div></div><br>';
 	
 	
 	}
