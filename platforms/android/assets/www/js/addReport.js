@@ -93,13 +93,13 @@ function testGlobalURI() {
 
 function take_pic() {
 	navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-		quality: 100,
+		quality: 80,
 		destinationType: Camera.DestinationType.FILE_URI,
 		sourceType: Camera.PictureSourceType.CAMERA,
 		targetWidth: 320,
 		targetHeight: 320,
 		correctOrientation: 1,
-		saveToPhotoAlbum: 1,
+		saveToPhotoAlbum: 0,
 		allowEdit: 1
 	});
 }
@@ -107,13 +107,13 @@ function take_pic() {
 function album_pic() {
 	clearCache();
 	navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-		quality: 100,
+		quality: 80,
 		destinationType: Camera.DestinationType.FILE_URI,
 		sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
 		targetWidth: 320,
 		targetHeight: 320,
 		correctOrientation: 1,
-		saveToPhotoAlbum: 1,
+		saveToPhotoAlbum: 0,
 		allowEdit: 1
 	});
 }
@@ -227,6 +227,7 @@ function handleAddreport() {
 		  params.latitude = globalLatitude;
 		  params.longitude = globalLongitude;
 		  params.locat = globalLocat;
+		  params.group = localStorage.userGroup
 		  console.log(options);
           //params.value2 = "param";
 ////

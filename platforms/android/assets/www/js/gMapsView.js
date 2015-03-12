@@ -39,7 +39,7 @@ function showThisMap(thisLat, thisLong) {
 	   // var defaultLatLng = new google.maps.LatLng(34.0983425, -118.3267434);  // Default to Hollywood, CA when no geolocation support
 	clearCache();//
 		var thisLatLng = new google.maps.LatLng(thisLat, thisLong);
-		refreshIntervalId = setInterval(function () { drawMap(thisLatLng); }, 1000);
+		refreshIntervalId = setInterval(function () { drawMap(thisLatLng); }, 2000);
 	
 	function drawMap(latlng) {
 		if (refreshIntervalId != 0) {

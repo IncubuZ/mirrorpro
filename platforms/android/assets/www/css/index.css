@@ -1,3 +1,6 @@
+-webkit-transform: translate3d(0,0,0);
+transform: translate3d(0,0,0);
+
 .controlgroup-textinput{
     padding-top:.22em;
     padding-bottom:.22em;
@@ -149,3 +152,11 @@ span#spContent{
 #mapPage, #map-canvas { width: 100%; height: 100%; padding: 0;}
 
 .viewer { height: 320px; width: 100%; }
+[data-role="content"] {
+	max-width: 500px;
+	margin: auto;	
+	
+	}
+.ui-filter-inset {
+    margin-top: 0;
+}

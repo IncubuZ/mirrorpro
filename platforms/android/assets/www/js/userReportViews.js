@@ -226,7 +226,7 @@ function loadOldUserReportAjax(output,ff,url,lastDiv,lastDivDate,lastDivId){
 function htmlReportUser(item){
 	var d = moment();
 	var de = moment(item.report_date, 'YYYY-MM-DD HH:mm:ss', 'th');
-	reportHtml = '<div class="ui-corner-all custom-corners" id="reportView" data-report-date="'+item.report_date+'" data-report-id="'+item.report_id+'" data-report-by="'+item.report_by+'"><a href="#otherProfilePage" class="ui-corner-all" id="lnkThisUpro" onClick="getOtherUserDetail(' + item.report_by + ')"><div class="ui-bar ui-bar-b"><h3><strong><span id="spNameFeed">' + item.report_realNameBy
+	reportHtml = '<div class="ui-corner-all custom-corners" id="reportView" data-report-date="'+item.report_date+'" data-report-id="'+item.report_id+'" data-report-by="'+item.report_by+'"><a href="#otherProfilePage" class="ui-corner-all" id="lnkThisUpro" onClick="getOtherUserDetail('+"'" + item.report_by + "'"+')"><div class="ui-bar ui-bar-b"><h3><strong><span id="spNameFeed">' + item.report_realNameBy
 				+ '</span></strong></h3></div></a><div class="ui-body ui-body-a"><div class="ui-grid-a">'
 				 + '<div class="ui-block-a" id="miniPropicHome">' 
 				 + '<img alt="" height="40" id="imgMiniPropicHome" src="'+serviceURL + "../img/userprofileimage/" + item.report_userImageUrl + "?" + d.format() + '" width="40">' 

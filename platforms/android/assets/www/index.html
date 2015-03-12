@@ -9,11 +9,11 @@
        <!--	<link rel="stylesheet" href="css/themes/Carmine.min.css" />-->
         <!--<link rel="stylesheet" href="css/themes/pomegraanate.min.css" />-->
         <!--<link rel="stylesheet" href="css/themes/BELIZEHOLE.min.css" />-->
-        <link rel="stylesheet" href="css/themes/matchicon.min.css" />
+        <link rel="stylesheet" href="css/matchicon.min.css" />
                <!-- <link rel="stylesheet" href="css/themes/chocolate.min.css" />-->
 
         
-		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
         <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css" />
         <!----------------------------------------------------------------------->
 		<!--<link rel="stylesheet" type="text/css" href="css/jquery.mobile.css">
@@ -40,6 +40,8 @@
          <script type="text/javascript" src="js/groupReportViews.js"></script>
          <script type="text/javascript" src="js/selectGroup.js"></script>
          <script type="text/javascript" src="js/createGroup.js"></script>
+         <script type="text/javascript" src="js/searchPage.js"></script>
+         <script type="text/javascript" src="js/oneReportView.js"></script>
 		 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
          <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>-->
          <script type="text/javascript" src="js/gMapsView.js"></script>
@@ -279,7 +281,7 @@
     <div role="main" class="ui-content">
         <h3 class="ui-title">คุณไม่ได้เลือกเข้าร่วมกลุ่มใดๆ!!</h3>
     <p>คุณไม่สามารถเพิ่มรายงานสถานการณ์ได้ กรุณาเลือกกลุ่มก่อน</p>
-        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-mini" data-rel="back">ไปหน้าจัดการกลุ่ม</a>
+        <a href="#groupPage" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-mini" onClick="loadUserGroup();">ไปหน้าจัดการกลุ่ม</a>
         <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-mini" data-rel="back" onClick="setNoGroupAlert();">ไม่แสดงข้อความนี้อีก</a>
     	<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-mini" data-rel="back">เตือนภายหลัง</a>
 
@@ -299,16 +301,17 @@
     <div data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" id="homePanel">
 	  			<ul data-role="listview">
 					<li data-icon="delete"><a href="#" data-rel="close">ปิดเมนู</a></li>
-		  			<li data-icon="recycle"><a href="#homePage" onClick="loadFeed();" data-rel="close">แสดงรายงาน สถานการณ์</a></li>
-                    <li data-icon="bullets"><a href="#groupPage" onClick="loadUserGroup();">แสดงรายงานและจัดการกลุ่ม</a></li>
+		  			<li data-icon="recycle"><a href="#homePage" onClick="loadFeed();" data-rel="close">แสดงรายงาน ทั้งหมด</a></li>
                     <li data-icon="bars"><a href="#userReportPage" onClick="loadThisUserReport();">รายงานสถานการณ์ของฉัน</a></li>
+                    <li data-icon="bullets"><a href="#groupPage" onClick="loadUserGroup();">แสดงรายงานและจัดการกลุ่ม</a></li>
 		  			<li data-icon="user"><a href="#profilePage" onClick="getUserDetail();">โปรไฟล์</a></li>
           			<li data-icon="plus"><a href="#addReportPage" onclick="getCurrentPosition();" class="disGroupBtn">เพิ่มรายงาน สถานการณ์</a></li>
-          			<li data-icon="plus"><a href="#mapPage" onclick="showMap();">GMAPs</a></li>
-                    <li data-icon="plus"><a href="#fullImgPage" onclick="getFullImg();">fullImg</a></li>
-                    <li data-icon="gear"><a href="#groupAlert" data-rel="popup" data-position-to="window" data-transition="pop" onclick="testVar();">ตั้งค่าแอพ</a></li>
-          			<li data-icon="lock"><a href="#" onClick="logOut();">ออกจากระบบ</a></li>
+          			<li data-icon="search"><a href="#searchPage" onclick="clearSearchFilter();">ค้นหารายงาน สถานการณ์</a></li>
+                    <li data-icon="lock"><a href="#" onClick="logOut();">ออกจากระบบ</a></li>
                     <li data-icon="power"><a href="#" onClick="exitApp();">ออกจากแอพ</a></li>
+                    <!--<li data-icon="plus"><a href="#mapPage" onclick="showMap();">GMAPs</a></li>
+                    <li data-icon="plus"><a href="#fullImgPage" onclick="getFullImg();">fullImg</a></li>-->
+					<!--<li data-icon="gear"><a href="#groupAlert" data-rel="popup" data-position-to="window" data-transition="pop" onclick="testVar();">ตั้งค่าแอพ</a></li>-->          		<!--<li data-icon="lock"><a href="#" onClick="clearCache();">clearCache</a></li>--> 
 	  			</ul>
 	</div><!-- /panel -->
   </div>
@@ -316,7 +319,7 @@
 
  <!------------------------- Start #profilePage --------------------------->
 <div data-role="page" id="profilePage">
-	 <div data-position="fixed" data-role="header" data-theme="b">
+  <div data-position="fixed" data-role="header" data-theme="b">
         <h1>Situation Report</h1>
           <a href="#profilePanel"class="ui-btn ui-btn-b ui-btn-inline ui-corner-all">Menu</a>
       </div><!-- /header -->
@@ -1081,12 +1084,98 @@
 	<div role="main" class="ui-content">
 		<h3 class="ui-title">คุณไม่ได้เลือกเข้าร่วมกลุ่มใดๆ!!</h3>
         <p>คุณไม่สามารถเพิ่มรายงานสถานการณ์ได้ กรุณาเลือกกลุ่มก่อน</p>
-		<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-mini" data-rel="back">ไปหน้าจัดการกลุ่ม</a>
+        <a href="#groupPage" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-mini" onClick="loadUserGroup();">ไปหน้าจัดการกลุ่ม</a>
         <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-mini" data-rel="back" onClick="setNoGroupAlert();">ไม่แสดงข้อความนี้อีก</a>
     	<a href="#homePage" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-mini">เตือนภายหลัง</a>
 	</div>
 </div>
 <!------------------------- Stop #groupAlertPage --------------------------->
+<!-----------------Start of #searchPage-------------->
+    <div data-role="page" id="searchPage">
+	  <div data-role="header" data-position="fixed" data-theme="b">
+        <h1>Situation Report</h1>
+          <a href="#searchPanel" class="ui-btn ui-btn-b ui-btn-inline ui-corner-all">Menu</a>
+      </div><!-- /header -->
+      
+		<div data-role="content" id="contentSearch">
+	
+<ul id="searchAutocomplete" data-role="listview" data-autodividers="true" data-inset="true" data-filter="true" data-filter-placeholder="กรอกข้อมูลที่ต้องการค้นหา....." data-filter-theme="a"></ul>
+		<span id="pMsgSearch"></span>
+        
+        </div><!-- /content -->
+	  
+   
+    <div data-position="fixed" data-role="footer" data-theme="b">
+		<div data-role="header">
+    <h6>Situation Report</h6>
+    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">      
+        <a href="#addReportPage" class="ui-btn ui-btn-icon-right ui-icon-arrow-u ui-btn-icon-notext ui-icon-camera disGroupBtn" onclick="getCurrentPosition();take_pic();">addReport</a>
+        <a href="#" class="ui-btn ui-btn-icon-right ui-icon-arrow-d ui-btn-icon-notext ui-icon-info">Info</a>
+    </div>
+    
+</div>
+	</div><!-- /footer -->
+    		
+    <div data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" id="searchPanel">
+	  			<ul data-role="listview">
+					<li data-icon="delete"><a href="#" data-rel="close">ปิดเมนู</a></li>
+		  			<li data-icon="recycle"><a href="#homePage" onClick="loadFeed();" data-rel="close">แสดงรายงาน สถานการณ์ทั้งหมด</a></li>
+                    <li data-icon="bars"><a href="#userReportPage" onClick="loadThisUserReport();">รายงานสถานการณ์ของฉัน</a></li>
+                    <li data-icon="bullets"><a href="#groupPage" onClick="loadUserGroup();">แสดงรายงานและจัดการกลุ่ม</a></li>
+		  			<li data-icon="user"><a href="#profilePage" onClick="getUserDetail();">โปรไฟล์</a></li>
+          			<li data-icon="plus"><a href="#addReportPage" onclick="getCurrentPosition();" class="disGroupBtn">เพิ่มรายงาน สถานการณ์</a></li>
+          			<li data-icon="lock"><a href="#" onClick="logOut();">ออกจากระบบ</a></li>
+                    <li data-icon="power"><a href="#" onClick="exitApp();">ออกจากแอพ</a></li>
+                    <!--<li data-icon="plus"><a href="#mapPage" onclick="showMap();">GMAPs</a></li>
+                    <li data-icon="plus"><a href="#fullImgPage" onclick="getFullImg();">fullImg</a></li>-->
+					<!--<li data-icon="gear"><a href="#groupAlert" data-rel="popup" data-position-to="window" data-transition="pop" onclick="testVar();">ตั้งค่าแอพ</a></li>-->          		<!--<li data-icon="lock"><a href="#" onClick="clearCache();">clearCache</a></li>--> 
+	  			</ul>
+	</div><!-- /panel -->
+  </div>
+<!-----------------Stop of #searchPage-------------->
+<!-----------------Start of #oneReportPage-------------->
+    <div data-role="page" id="oneReportPage">
+	  <div data-role="header" data-position="fixed" data-theme="b">
+        <h1>Situation Report</h1>
+          <a href="#oneReportPanel" class="ui-btn ui-btn-b ui-btn-inline ui-corner-all">Menu</a>
+      </div><!-- /header -->
+      
+		<div data-role="content" id="contentOneReport">
+	
+		<div id="oneReportDive"></div><!-- /feedTop -->
+        <span id="spOneReport"></span>
+        
+        </div><!-- /content -->
+	  
+   
+    <div data-position="fixed" data-role="footer" data-theme="b">
+		<div data-role="header">
+    <h6>Situation Report</h6>
+    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">      
+        <a href="#addReportPage" class="ui-btn ui-btn-icon-right ui-icon-arrow-u ui-btn-icon-notext ui-icon-camera disGroupBtn" onclick="getCurrentPosition();take_pic();">addReport</a>
+        <a href="#" class="ui-btn ui-btn-icon-right ui-icon-arrow-d ui-btn-icon-notext ui-icon-info">Info</a>
+    </div>
+    
+</div>
+	</div><!-- /footer -->
+    		
+    <div data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" id="oneReportPanel">
+	  			<ul data-role="listview">
+					<li data-icon="delete"><a href="#" data-rel="close">ปิดเมนู</a></li>
+		  			<li data-icon="recycle"><a href="#homePage" onClick="loadFeed();" data-rel="close">แสดงรายงาน สถานการณ์ทั้งหมด</a></li>
+                    <li data-icon="bars"><a href="#userReportPage" onClick="loadThisUserReport();">รายงานสถานการณ์ของฉัน</a></li>
+                    <li data-icon="bullets"><a href="#groupPage" onClick="loadUserGroup();">แสดงรายงานและจัดการกลุ่ม</a></li>
+		  			<li data-icon="user"><a href="#profilePage" onClick="getUserDetail();">โปรไฟล์</a></li>
+          			<li data-icon="plus"><a href="#addReportPage" onclick="getCurrentPosition();" class="disGroupBtn">เพิ่มรายงาน สถานการณ์</a></li>
+          			<li data-icon="lock"><a href="#" onClick="logOut();">ออกจากระบบ</a></li>
+                    <li data-icon="power"><a href="#" onClick="exitApp();">ออกจากแอพ</a></li>
+                    <!--<li data-icon="plus"><a href="#mapPage" onclick="showMap();">GMAPs</a></li>
+                    <li data-icon="plus"><a href="#fullImgPage" onclick="getFullImg();">fullImg</a></li>-->
+					<!--<li data-icon="gear"><a href="#groupAlert" data-rel="popup" data-position-to="window" data-transition="pop" onclick="testVar();">ตั้งค่าแอพ</a></li>-->          		<!--<li data-icon="lock"><a href="#" onClick="clearCache();">clearCache</a></li>--> 
+	  			</ul>
+	</div><!-- /panel -->
+  </div>
+<!-----------------Stop of #oneReportPage-------------->
 
     <!--<div data-role="popup" id="groupAlert" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
     <div data-role="header" data-theme="a">

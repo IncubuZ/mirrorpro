@@ -230,6 +230,7 @@ function selectThisGroup (){
 					if (res.success === true) {
 						window.localStorage.userGroup = tg;
 						gid = tg;
+						checkGroup();
 						loadUserGroup();
 						//loadGroupFeed();
 						window.history.back();//navigator.app.backHistory();

@@ -66,6 +66,7 @@ function exitApp(){
 	navigator.app.exitApp();
 	}
 function deviceReady() {
+	cordova.exec(null, null, "SplashScreen", "hide", []); 
 	 clearCache();
 	checkPreAuth();
 	document.addEventListener("backbutton", onBackbutton, false);
