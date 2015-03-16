@@ -40,6 +40,8 @@ function loadFeed(){
 		error: function(){
 		   output.text('พบข้อผิดพลาดในการโหลดข้อมูล!!');
 		   				loadingHide("#contentHome");
+			navigator.notification.confirm('พบข้อผิดพลาดในการโหลดข้อมูล!!โหลดใหม่หรือไม่?', loadFeedCallback,'Error','ไม่,ลองอีกครั้ง');
+
 
 		}
 	});

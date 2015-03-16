@@ -19,6 +19,8 @@
 
 package com.ex.mirrorpro;
 
+import java.util.Random;
+
 import android.os.Bundle;
 import org.apache.cordova.*;
 
@@ -26,14 +28,17 @@ public class MirrorPro extends CordovaActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
-    {
+    {	
+    	Random generator = new Random(); 
+    	int r = generator.nextInt();
         super.onCreate(savedInstanceState);
+        //super.setIntegerProperty("loadUrlTimeoutValue", 60000);
+        super.setIntegerProperty("splashscreen", R.drawable.splash);
         super.init();
         // Set by <content src="index.html" /> in config.xml
         //super.loadUrl(Config.getStartUrl());
-        super.setIntegerProperty("splashscreen", R.drawable.splash);
-        super.loadUrl("file:///android_asset/www/index.html", 10000);
+        super.clearCache();
+        super.loadUrl("file:///android_asset/www/index.html?" + r, 10000);
         //super.loadUrl("file:///android_asset/www/geo.html");
     }
 }
-

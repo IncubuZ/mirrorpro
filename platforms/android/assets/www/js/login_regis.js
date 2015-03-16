@@ -99,7 +99,9 @@ function handleLogin() {
 					window.localStorage.userImageUrl = res.user_imageUrl;
 					window.localStorage.userStatus = res.user_status;
 					window.localStorage.userGroup = res.user_group;
-					console.log(typeof res.user_group);
+					userFooterSet();
+					console.log(res.user_group);
+					regisThisDevice();
 					//window.localStorage.userId = res.user_id;
 					//window.location.replace(some.html);
 					//window.open("home.html", '_self');
@@ -178,6 +180,8 @@ function handleRegis() {
 					window.localStorage.userImageUrl = res.user_imageUrl;
 					window.localStorage.userStatus = res.user_status;
 					window.localStorage.userGroup = res.user_group;
+					userFooterSet();
+					regisThisDevice();
 					//window.localStorage.userId = res.user_id;
 					//window.location.replace(some.html);
 					//window.open("home.html", '_self');
@@ -429,8 +433,15 @@ function logOut() {
 	localStorage.removeItem("userStatus");
 	localStorage.removeItem("userGroup");
 	localStorage.removeItem("noGroupAlert");
+	deleteThisDevice();
+	countNotifyReset();
 	console.log("LogOut");
 	$.mobile.changePage("#loginRegisPage");
 	//window.open("login_regis.html",'_self');
+}
+//////////////////////////////////////////////////////////////////////////////
+
+function userFooterSet() {
+	$('.userFooter').text(window.localStorage.userRName+" "+window.localStorage.userSurname);
 }
 //////////////////////////////////////////////////////////////////////////////

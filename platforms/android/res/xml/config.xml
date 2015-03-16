@@ -42,4 +42,10 @@
     <feature name="Cache">
         <param name="android-package" value="at.modalog.cordova.plugin.cache.Cache" />
     </feature>
+    <feature name="PushPlugin">
+        <param name="android-package" value="com.plugin.gcm.PushPlugin" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
 </widget>

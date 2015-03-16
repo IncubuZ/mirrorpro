@@ -211,6 +211,7 @@ function selectThisNewGroup (){
 						//window.history.back();//navigator.app.backHistory();
 						navigator.notification.alert("เลือกกลุ่มเรียบร้อยแล้ว.");
 						console.log(res);
+						regisThisDevice();
 					} else {
 						$("#spGroupOne").text("มีบางอย่างผิดพลาด").css("color", "red");
 						console.log(res.success);
